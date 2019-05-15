@@ -1,0 +1,44 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'base'
+}
+
+apply plugin: 'idea'
+
+group 'com.olx.locationHandler'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+version ='1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // Rest Assured
+    compile group: 'io.rest-assured', name: 'rest-assured', version: '3.1.1'
+    compile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.1.1'
+    //JSON
+    compile group: 'org.json', name: 'json', version: '20180813'
+    //Apache POI
+    compile group: 'org.apache.poi', name: 'poi', version: '3.17'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+
+
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Location Handler',
+                'Implementation-Version': version,
+                'Main-Class': 'location.Driver'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

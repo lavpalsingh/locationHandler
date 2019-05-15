@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Class-Path: hamcrest-core-1.3.jar json-schema-core-1.2.5.jar json-sche
+ ma-validator-3.1.1.jar jackson-annotations-2.2.3.jar json-20180813.ja
+ r poi-ooxml-3.17.jar uri-template-0.9.jar groovy-all-2.3.11.jar xmlbe
+ ans-2.6.0.jar activation-1.1.jar groovy-2.4.12.jar jackson-coreutils-
+ 1.8.jar btf-1.2.jar json-schema-validator-2.2.6.jar guava-16.0.1.jar 
+ jsr305-3.0.0.jar httpmime-4.5.1.jar jaxb-api-2.2.12.jar junit-4.12.ja
+ r mailapi-1.4.3.jar poi-ooxml-schemas-3.17.jar hamcrest-library-1.3.j
+ ar msg-simple-1.1.jar poi-3.17.jar commons-lang3-3.4.jar curvesapi-1.
+ 04.jar rest-assured-common-3.1.1.jar httpcore-4.4.6.jar rhino-1.7R4.j
+ ar jackson-core-2.2.3.jar xml-path-3.1.1.jar commons-logging-1.2.jar 
+ rest-assured-3.1.1.jar httpclient-4.5.3.jar tagsoup-1.2.1.jar stax-ap
+ i-1.0.1.jar jackson-databind-2.2.3.jar libphonenumber-6.2.jar groovy-
+ json-2.4.12.jar joda-time-2.3.jar commons-codec-1.10.jar jopt-simple-
+ 4.6.jar json-path-3.1.1.jar commons-collections4-4.1.jar groovy-xml-2
+ .4.12.jar
+Main-Class: location.Driver
+
