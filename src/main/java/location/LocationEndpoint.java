@@ -16,11 +16,24 @@ import static location.Constant.*;
 class LocationEndpoint {
 
     private final String env;
+    private final String dataset,lang1,lang2;
     private String X_AUTH_TOKEN_VAL;
 
     LocationEndpoint(String env, String x_auth_token) {
        this.env=env;
         this.X_AUTH_TOKEN_VAL = x_auth_token;
+
+        dataset = System.getProperty("dataset");
+        System.out.println("dataset: "+dataset);
+
+        lang1 = System.getProperty("lang1");
+        System.out.println("lang1: "+lang1);
+
+
+        lang2 = System.getProperty("lang2");
+        System.out.println("lang2: "+lang2);
+
+
     }
 
     private void setBaseURL(){
@@ -111,17 +124,17 @@ class LocationEndpoint {
 
     private String getRequestBody(String locationType, String location_name, String longitude, String latitude, long parentId, String approverEmail) {
         JSONObject requestParams = new JSONObject();
-        requestParams.put("dataset", "in");
+        requestParams.put("dataset", dataset);
         if (locationType != null && !locationType.isEmpty()) requestParams.put("locationType", locationType);
         JSONArray names_array = new JSONArray();
         JSONObject name_hi = new JSONObject();
         if (location_name != null && !location_name.isEmpty()) name_hi.put("name", location_name);
-        name_hi.put("lang", "hi");
+        name_hi.put("lang", lang2);
         name_hi.put("primary", true);
 
         JSONObject name_en = new JSONObject();
         if (location_name != null && !location_name.isEmpty()) name_en.put("name", location_name);
-        name_en.put("lang", "en");
+        name_en.put("lang", lang1);
         name_en.put("primary", true);
 
         names_array.put(name_en);
@@ -141,18 +154,18 @@ class LocationEndpoint {
 
     private String getRequestBody(long id, String locationType, String location_name, String longitude, String latitude, long parentId, String approverEmail) {
         JSONObject requestParams = new JSONObject();
-        requestParams.put("dataset", "in");
+        requestParams.put("dataset", dataset);
         requestParams.put("locationId", id);
         if (locationType != null && !locationType.isEmpty()) requestParams.put("locationType", locationType);
         JSONArray names_array = new JSONArray();
         JSONObject name_hi = new JSONObject();
         if (location_name != null && !location_name.isEmpty()) name_hi.put("name", location_name);
-        name_hi.put("lang", "hi");
+        name_hi.put("lang", lang2);
         name_hi.put("primary", true);
 
         JSONObject name_en = new JSONObject();
         if (location_name != null && !location_name.isEmpty()) name_en.put("name", location_name);
-        name_en.put("lang", "en");
+        name_en.put("lang", lang1);
         name_en.put("primary", true);
 
         names_array.put(name_en);
@@ -172,7 +185,7 @@ class LocationEndpoint {
 
     private String getRequestBody(long id, String supersededByLocationId, String observations, String approverEmail) {
         JSONObject requestParams = new JSONObject();
-        requestParams.put("dataset", "in");
+        requestParams.put("dataset", dataset);
         requestParams.put("locationId", id);
         requestParams.put("supersededByLocationId", supersededByLocationId);
         requestParams.put("observations", observations);

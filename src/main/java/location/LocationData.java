@@ -80,7 +80,7 @@ class LocationData {
         ExcelReader er;
         try {
             current_row = row;
-            er = new ExcelReader(sheet_path, 0, 5);
+            er = new ExcelReader(sheet_path, 0, 7);
             ArrayList<String> input = er.readRow(row);
             String city = input.get(0);
             String state = input.get(1);
@@ -89,9 +89,15 @@ class LocationData {
             String lon = input.get(4);
             String loc_id = input.get(6);
             long parentID = getParentID(city, state);
-            long loc_id_ = Long.parseLong(loc_id);
+            long loc_id_ = 0;
+
             System.out.println("parent " + parentID);
             if (parentID != -1) {
+                try {
+                    loc_id_ = Long.parseLong(loc_id);
+                }catch(NumberFormatException e){
+                    e.printStackTrace();
+                }
                 int id = update_location(loc_id_, location_type, locality, lon, lat, parentID, approver);
                 if (id != -1) {
                     write_comment(SUCCESS);
@@ -108,18 +114,24 @@ class LocationData {
         ExcelReader er;
         try {
             current_row = row;
-            er = new ExcelReader(sheet_path, 0, 5);
+            er = new ExcelReader(sheet_path, 0, 3);
             ArrayList<String> input = er.readRow(row);
             String loc_id = input.get(0);
             String supersededByLocationId = input.get(1);
             String observations = input.get(2);
-            long loc_id_ = Long.parseLong(loc_id);
-            int id = deprecate_location(loc_id_, supersededByLocationId, observations, approver);
-            if (id != -1) {
-                write_comment(SUCCESS);
-            } else {
+            long loc_id_;
+            if(loc_id!=null) {
+                loc_id_ = Long.parseLong(loc_id);
+                int id = deprecate_location(loc_id_, supersededByLocationId, observations, approver);
+                if (id != -1) {
+                    write_comment(SUCCESS);
+                } else {
+                    write_comment(FAILURE);
+                }
+            }else {
                 write_comment(FAILURE);
             }
+
             er.closeWorkbook();
         } catch (Exception e) {
             e.printStackTrace();
