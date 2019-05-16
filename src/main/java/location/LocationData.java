@@ -49,6 +49,7 @@ class LocationData {
 
    private void addData(int row) {
         ExcelReader er;
+        int ptype =1;
         try {
             current_row = row;
             er = new ExcelReader(sheet_path, 0, 5);
@@ -59,7 +60,10 @@ class LocationData {
             String lat = input.get(3);
             String lon = input.get(4);
 
-            long parentID = getParentID(city, state);
+            if(this.location_type.equalsIgnoreCase(CITY))
+                ptype =0;
+
+            long parentID = getParentID(city, state,ptype);
             System.out.println("parent " + parentID);
             if (parentID != -1) {
                 int id = add_location(location_type, locality, lon, lat, parentID, approver);
@@ -78,6 +82,7 @@ class LocationData {
 
     private void updateData(int row) {
         ExcelReader er;
+        int ptype =1;
         try {
             current_row = row;
             er = new ExcelReader(sheet_path, 0, 7);
@@ -88,7 +93,10 @@ class LocationData {
             String lat = input.get(3);
             String lon = input.get(4);
             String loc_id = input.get(6);
-            long parentID = getParentID(city, state);
+            if(this.location_type.equalsIgnoreCase(CITY))
+                ptype =0;
+
+            long parentID = getParentID(city, state,ptype);
             long loc_id_ = 0;
 
             System.out.println("parent " + parentID);
@@ -164,7 +172,7 @@ class LocationData {
     }
 
 
-    private long getParentID(String city, String state) {
+    private long getParentID(String city, String state,int parent_type) {
         if (city_cache.containsKey(city)) {
             return city_cache.get(city);
         } else {
@@ -176,7 +184,8 @@ class LocationData {
                 if (!name.equalsIgnoreCase(city)) {
                     return -1;
                 } else {
-                    String state_name = r.path("data.suggestions[0].addressComponents[1].name");
+                   String path ="data.suggestions[0].addressComponents["+parent_type+"].name";
+                    String state_name = r.path(path);
                     System.out.println("State fetched from response " + state_name);
                     if (state_name.equalsIgnoreCase(state)) {
                         long city_id = Long.parseLong(String.valueOf(obj.get("id")));
