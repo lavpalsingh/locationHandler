@@ -177,14 +177,14 @@ class LocationData {
             return city_cache.get(city);
         } else {
             Response r = a.get_suggestion(city, state);
-            ArrayList<HashMap<String, Object>> arr = r.path("data.suggestions");
+            ArrayList<HashMap<String, Object>> arr = r.path("data");
             if (arr.size() > 0) {
                 HashMap<String, Object> obj = arr.get(0);
                 String name = (String) obj.get("name");
                 if (!name.equalsIgnoreCase(city)) {
                     return -1;
                 } else {
-                   String path ="data.suggestions[0].addressComponents["+parent_type+"].name";
+                   String path ="data[0].addressComponents["+parent_type+"].name";
                     String state_name = r.path(path);
                     System.out.println("State fetched from response " + state_name);
                     if (state_name.equalsIgnoreCase(state)) {

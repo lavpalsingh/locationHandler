@@ -41,6 +41,12 @@ class LocationEndpoint {
         else if (env.equalsIgnoreCase(PRODUCTION)) RestAssured.baseURI = BASE_URL_PRODUCTION;
         else RestAssured.baseURI = BASE_URL_STAGING;
     }
+
+    private void getUrlAutoComplete(){
+        if (env.equalsIgnoreCase(STAGING)) RestAssured.baseURI = AUTOCOMPLETE_STG;
+        else if (env.equalsIgnoreCase(PRODUCTION)) RestAssured.baseURI = AUTOCOMPLETE_PRD;
+        else RestAssured.baseURI = AUTOCOMPLETE_STG;
+    }
     private Request buildRequest(String locationType, String location_name, String longitude, String latitude, long parentId, String approverEmail)  {
         setBaseURL();
         return Request.builder().setApiPath(API_PATH_LOCATION_ADDITION).setHeaders(getHeaders()).setRequestBody(getRequestBody(locationType, location_name, longitude, latitude, parentId, approverEmail)).setRequestType(Method.POST).build();
@@ -57,7 +63,7 @@ class LocationEndpoint {
     }
 
     private Request buildRequest(String key1, String key2)  {
-        RestAssured.baseURI = BASE_URL_VYOM_INTERNAL;
+        getUrlAutoComplete();
 
         Map<String, Object> query = new HashMap<>();
         StringBuilder sb = new StringBuilder();
